@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue2.6.10%20(1).js"></script>
+    <style>
+        li{padding:7px;}
+        #app{width:400px;margin:0 auto;}
+        .ap{display: inline-block;color: red;background: #a9ffe7;}
+        .bp{display: inline-block}
+    </style>
+</head>
+<body>
+<div id="app">
+    <demo-table :info="tbinfo1"  style="font-size: 25px; border: salmon solid 2px"></demo-table>
+    <demo-table :info="tbinfo2"  style="font-size: 25px; border: aqua solid 2px; margin-top:10px"></demo-table>
+</div>
+<script>
+    var DemoTable={
+        template:`
+        <div>
+        <div>
+        <ul>
+                <li v-for="(itemtitle,index) in info" :class="e[index]==1?c:d" @click="click(index)">
+                {{itemtitle.name}}
+                </li>
+         </ul>
+         </div>
+            <div>
+                <ul v-for='(item,index) in info' :key='index' v-show="e[index]==1">
+                <li v-for='(childitem,index) in item.detail' :key='index'>
+                {{childitem}}
+             `,
+        props:['info'],
+        data(){
+            return{
+                c:'ap',
+                d:'bp',
+                e:[1,0,0]
+            }
+        },
+        methods:{
+            click(index){
+                this.e=[0,0,0]
+                this.e[index]=1;
+            }
+        },
+
+    }
+    new Vue({
+        el:'#app',
+        data(){
+            return{
+                tbinfo1:[{name:'001',detail:{item1:'姓名：李亦',item2:'性别：男',item3:'年龄：20',item4:'爱好：篮球'}},
+                    {name:'002',detail:{item1:'姓名：洵雅',item2:'性别：女',item3:'年龄：18',item4:'爱好：音乐'}},
+                    {name:'003',detail:{item1:'姓名：夏红',item2:'性别：女',item3:'年龄：19',item4:'爱好：音乐'}},
+                ],
+                tbinfo2:[{name:'音乐',detail:{item1:'《野狼disco》',item2:'《你应该很快乐》',item3:'《离开我你快乐吗》',item4:'《孤芳自赏》'}},
+                    {name:'电影',detail:{item1:'《那些年的我们》',item2:'《毒液》',item3:'《大黄蜂》',item4:'《夏目友人帐》'}},
+                    {name:'运动',detail:{item1:'篮球',item2:'羽毛球',item3:'足球',item4:'乒乓球'}}
+                ]
+            }
+        },
+        components:{DemoTable}
+    })
+</script>
+</body>
+</html>
